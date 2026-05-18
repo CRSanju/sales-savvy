@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your bag — Sales Savvy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="announce-bar" aria-label="Promotions">
+    <div class="announce-bar__track">
+      <span>Secure checkout with Razorpay · Sales Savvy</span>
+      <span>Secure checkout with Razorpay · Sales Savvy</span>
+      <span>Secure checkout with Razorpay · Sales Savvy</span>
+      <span>Secure checkout with Razorpay · Sales Savvy</span>
+    </div>
+  </div>
+
+  <header class="site-nav">
+    <a class="site-nav__brand" href="/customer-home.html">
+      <span class="site-nav__mark" aria-hidden="true"></span>
+      Sales Savvy
+    </a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="/customer-home.html">All products</a></li>
+        <li><a href="/index.html#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="site-nav__actions">
+      <span class="site-nav__icon-btn" id="welcomeText" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+      <button type="button" class="btn btn--ghost btn--small" onclick="logout()">Log out</button>
+    </div>
+  </header>
+
+  <main class="app-main bg-grid">
+    <div class="page-hero">
+      <h1>Your bag</h1>
+      <p>Review lines, adjust quantities, checkout when ready.</p>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" class="btn btn--ghost" onclick="goBackToShopping()">← Continue shopping</button>
+    </div>
+
+    <div id="cartList"></div>
+    <h3 id="cartTotal"></h3>
+    <button type="button" id="checkoutBtn" class="btn btn--accent" onclick="checkout()">Proceed to checkout</button>
+  </main>
+
+  <footer class="site-footer">
+    <span>© Sales Savvy</span>
+    <a href="/customer-home.html">Catalog</a>
+  </footer>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="/js/customer.js"></script>
+</body>
+</html>

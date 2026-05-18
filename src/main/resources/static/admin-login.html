@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin login — Sales Savvy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-visual auth-visual--admin">
+      <div class="auth-visual__caption auth-visual__caption--light">
+        <h2>Operations</h2>
+        <p>Administrator access for catalog and orders.</p>
+      </div>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-card">
+        <h1>Admin login</h1>
+        <p class="lead">Sign in with your admin credentials.</p>
+        <form id="adminLoginForm">
+          <div class="field-group">
+            <label for="username">Username</label>
+            <input class="field-line" type="text" id="username" name="username" placeholder="Admin username" autocomplete="username" required />
+          </div>
+          <div class="field-group">
+            <label for="password">Password</label>
+            <input class="field-line" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          </div>
+          <button class="btn btn--accent" type="submit">Log in</button>
+        </form>
+        <p id="message" class="msg" role="status"></p>
+        <div class="auth-links">
+          <a href="/index.html">← Back to home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

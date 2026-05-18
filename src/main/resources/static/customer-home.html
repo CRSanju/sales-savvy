@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shop — Sales Savvy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="announce-bar" aria-label="Promotions">
+    <div class="announce-bar__track">
+      <span>Members save on repeat deliveries · Sales Savvy</span>
+      <span>Members save on repeat deliveries · Sales Savvy</span>
+      <span>Members save on repeat deliveries · Sales Savvy</span>
+      <span>Members save on repeat deliveries · Sales Savvy</span>
+    </div>
+  </div>
+
+  <header class="site-nav">
+    <a class="site-nav__brand" href="/customer-home.html">
+      <span class="site-nav__mark" aria-hidden="true"></span>
+      Sales Savvy
+    </a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="/customer-home.html">All products</a></li>
+        <li><a href="/index.html#shop-need">Shop by need</a></li>
+        <li><a href="/index.html#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="site-nav__actions">
+      <span class="site-nav__icon-btn" id="welcomeText" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+      <button type="button" class="site-nav__bag" onclick="goToCart()" title="View cart" aria-label="View cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 7h15l-1.5 9h-12z" />
+          <path d="M6 7 5 3H2" />
+          <circle cx="9" cy="20" r="1" fill="currentColor" />
+          <circle cx="18" cy="20" r="1" fill="currentColor" />
+        </svg>
+      </button>
+      <button type="button" class="btn btn--ghost btn--small" onclick="logout()">Log out</button>
+    </div>
+  </header>
+
+  <main class="app-main bg-grid">
+    <div class="page-hero">
+      <h1>Best sellers</h1>
+      <p>Swipe the row or use arrows — add to bag with one tap.</p>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" class="btn btn--dark" onclick="startShopping()">Refresh</button>
+      <button type="button" class="btn btn--accent" onclick="goToCart()">View cart</button>
+    </div>
+
+    <section id="shoppingSection" class="section" style="padding: 0;">
+      <div class="product-carousel">
+        <button type="button" class="carousel-arrow carousel-arrow--prev" onclick="scrollProducts(-1)" aria-label="Scroll products left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="product-carousel__viewport">
+          <div id="productList"></div>
+        </div>
+        <button type="button" class="carousel-arrow carousel-arrow--next" onclick="scrollProducts(1)" aria-label="Scroll products right">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer-tote" style="padding: 28px 20px;">
+    <div class="footer-tote__top" style="grid-template-columns: 1fr auto;">
+      <div>
+        <p class="footer-brand__name" style="font-size: 1.5rem;">Savvy</p>
+        <p class="footer-brand__tag">Signed-in shopping</p>
+      </div>
+      <div class="footer-col">
+        <ul>
+          <li><a href="/index.html">Marketing home</a></li>
+          <li><a href="/index.html#contact">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span>© Sales Savvy</span>
+    <a href="/index.html">Home</a>
+  </footer>
+
+  <script src="/js/customer.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign up — Sales Savvy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-visual">
+      <div class="auth-visual__caption">
+        <h2>Join Sales Savvy</h2>
+        <p>Create an account to shop the catalog and schedule product delivery checkout.</p>
+      </div>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-card">
+        <h1>Create account</h1>
+        <p class="lead">A few details — then you are ready to browse.</p>
+        <form id="signupForm">
+          <div class="field-group">
+            <label for="name">Full name</label>
+            <input class="field-line" type="text" id="name" name="name" placeholder="Jane Doe" required />
+          </div>
+          <div class="field-group">
+            <label for="username">Username</label>
+            <input class="field-line" type="text" id="username" name="username" placeholder="Choose a username" autocomplete="username" required />
+          </div>
+          <div class="field-group">
+            <label for="email">Email</label>
+            <input class="field-line" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field-group">
+            <label for="password">Password</label>
+            <input class="field-line" type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required />
+          </div>
+          <button class="btn btn--accent" type="submit">Register</button>
+        </form>
+        <p id="message" class="msg" role="status"></p>
+        <div class="auth-links">
+          <a href="/login.html">Already have an account? Log in</a>
+          <a href="/index.html">← Back to home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/auth.js"></script>
+</body>
+</html>
