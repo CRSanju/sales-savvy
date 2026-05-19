@@ -10,7 +10,6 @@ function ensureAdminAccess() {
     window.location.replace("/admin-login.html");
     return false;
   }
-
   return true;
 }
 
@@ -40,23 +39,21 @@ async function addProduct(event) {
     body: JSON.stringify(data)
   });
 
+  const msg = document.getElementById("message");
   if (!response.ok) {
-    document.getElementById("message").innerText = "Failed to add product";
+    msg.innerText = "Failed to add product";
+    msg.className = "msg msg--err";
     return;
   }
 
-  document.getElementById("message").innerText = "Product added successfully";
-
-  setTimeout(() => {
-    window.location.href = "/all-products-admin.html";
-  }, 1000);
+  msg.innerText = "Product added successfully!";
+  msg.className = "msg msg--ok";
+  setTimeout(() => { window.location.href = "/all-products-admin.html"; }, 1000);
 }
 
 async function loadAllProducts() {
   const response = await fetch("/admin/products", {
-    headers: {
-      "Authorization": "Bearer " + getToken()
-    }
+    headers: { "Authorization": "Bearer " + getToken() }
   });
 
   if (response.status === 401 || response.status === 403) {
@@ -68,40 +65,44 @@ async function loadAllProducts() {
   const productList = document.getElementById("productList");
 
   if (!products.length) {
-    productList.innerHTML = "<p>No products found</p>";
+    productList.innerHTML = '<p class="empty-state">No products found. <a href="/add-product.html">Add one now.</a></p>';
     return;
   }
 
   let html = `
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-        <th>Category</th>
-        <th>Actions</th>
-      </tr>
+    <div class="table-wrap">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
   `;
 
   products.forEach(product => {
     html += `
       <tr>
-        <td>${product.id}</td>
-        <td>${product.name}</td>
-        <td>${product.price}</td>
+        <td style="color:var(--muted);font-size:0.8rem;">#${product.id}</td>
+        <td style="font-weight:600;">${product.name}</td>
+        <td>₹${product.price}</td>
         <td>${product.stock}</td>
-        <td>${product.category}</td>
+        <td><span class="category-tag">${product.category}</span></td>
         <td>
-          <a href="/view-product-admin.html?id=${product.id}">View</a>
-          <a href="/edit-product.html?id=${product.id}">Edit</a>
-          <button onclick="deleteProduct(${product.id})">Delete</button>
+          <a href="/view-product-admin.html?id=${product.id}" class="btn btn--ghost btn--small">View</a>
+          <a href="/edit-product.html?id=${product.id}" class="btn btn--dark btn--small">Edit</a>
+          <button class="btn btn--small btn--delete" onclick="deleteProduct(${product.id})">Delete</button>
         </td>
       </tr>
     `;
   });
 
-  html += "</table>";
+  html += `</tbody></table></div>`;
   productList.innerHTML = html;
 }
 
@@ -110,9 +111,7 @@ async function loadProductDetails() {
   if (!id) return;
 
   const response = await fetch(`/admin/products/${id}`, {
-    headers: {
-      "Authorization": "Bearer " + getToken()
-    }
+    headers: { "Authorization": "Bearer " + getToken() }
   });
 
   if (response.status === 401 || response.status === 403) {
@@ -124,28 +123,30 @@ async function loadProductDetails() {
   const detailsDiv = document.getElementById("productDetails");
 
   detailsDiv.innerHTML = `
-    <p><strong>ID:</strong> ${product.id}</p>
-    <p><strong>Name:</strong> ${product.name}</p>
-    <p><strong>Description:</strong> ${product.description}</p>
-    <p><strong>Price:</strong> ${product.price}</p>
-    <p><strong>Stock:</strong> ${product.stock}</p>
-    <p><strong>Category:</strong> ${product.category}</p>
-    <p><strong>Image:</strong></p>
-    <img class="product-image-preview" src="${product.imageUrl || ""}" alt="${product.name}" />
+    <div class="product-detail-layout">
+      <img class="product-image-preview" src="${product.imageUrl || '/images/placeholder-product.svg'}" alt="${product.name}" onerror="this.src='/images/placeholder-product.svg'" />
+      <div class="product-detail-info">
+        <h2 style="margin:0 0 4px;font-size:1.4rem;">${product.name}</h2>
+        <p style="color:var(--muted);margin:0 0 20px;">${product.description}</p>
+        <div class="detail-row"><span>ID</span><strong>#${product.id}</strong></div>
+        <div class="detail-row"><span>Price</span><strong>₹${product.price}</strong></div>
+        <div class="detail-row"><span>Stock</span><strong>${product.stock} units</strong></div>
+        <div class="detail-row"><span>Category</span><strong>${product.category}</strong></div>
+        <div style="margin-top:24px;display:flex;gap:10px;">
+          <a href="/edit-product.html?id=${product.id}" class="btn btn--accent">Edit Product</a>
+          <button class="btn btn--ghost" onclick="window.location.href='/all-products-admin.html'">← Back to list</button>
+        </div>
+      </div>
+    </div>
   `;
 }
-/*
-<img src="${product.photoUrl ?? ""}" />
-*/
 
 async function prefillEditForm() {
   const id = getProductIdFromUrl();
   if (!id) return;
 
   const response = await fetch(`/admin/products/${id}`, {
-    headers: {
-      "Authorization": "Bearer " + getToken()
-    }
+    headers: { "Authorization": "Bearer " + getToken() }
   });
 
   if (response.status === 401 || response.status === 403) {
@@ -154,7 +155,6 @@ async function prefillEditForm() {
   }
 
   const product = await response.json();
-
   document.getElementById("name").value = product.name;
   document.getElementById("description").value = product.description;
   document.getElementById("price").value = product.price;
@@ -167,7 +167,6 @@ async function updateProduct(event) {
   event.preventDefault();
 
   const id = getProductIdFromUrl();
-
   const data = {
     name: document.getElementById("name").value,
     description: document.getElementById("description").value,
@@ -186,27 +185,24 @@ async function updateProduct(event) {
     body: JSON.stringify(data)
   });
 
+  const msg = document.getElementById("message");
   if (!response.ok) {
-    document.getElementById("message").innerText = "Failed to update product";
+    msg.innerText = "Failed to update product";
+    msg.className = "msg msg--err";
     return;
   }
 
-  document.getElementById("message").innerText = "Product updated successfully";
-
-  setTimeout(() => {
-    window.location.href = "/all-products-admin.html";
-  }, 1000);
+  msg.innerText = "Product updated successfully!";
+  msg.className = "msg msg--ok";
+  setTimeout(() => { window.location.href = "/all-products-admin.html"; }, 1000);
 }
 
 async function deleteProduct(id) {
-  const confirmed = confirm("Are you sure you want to delete this product?");
-  if (!confirmed) return;
+  if (!confirm("Are you sure you want to delete this product?")) return;
 
   const response = await fetch(`/admin/products/${id}`, {
     method: "DELETE",
-    headers: {
-      "Authorization": "Bearer " + getToken()
-    }
+    headers: { "Authorization": "Bearer " + getToken() }
   });
 
   if (!response.ok) {
@@ -226,20 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const productList = document.getElementById("productList");
   const productDetails = document.getElementById("productDetails");
 
-  if (addProductForm) {
-    addProductForm.addEventListener("submit", addProduct);
-  }
-
-  if (editProductForm) {
-    prefillEditForm();
-    editProductForm.addEventListener("submit", updateProduct);
-  }
-
-  if (productList) {
-    loadAllProducts();
-  }
-
-  if (productDetails) {
-    loadProductDetails();
-  }
+  if (addProductForm) addProductForm.addEventListener("submit", addProduct);
+  if (editProductForm) { prefillEditForm(); editProductForm.addEventListener("submit", updateProduct); }
+  if (productList) loadAllProducts();
+  if (productDetails) loadProductDetails();
 });
