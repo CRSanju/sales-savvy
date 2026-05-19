@@ -834,6 +834,8 @@ a {
   display: flex;
   align-items: stretch;
   gap: 8px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .carousel-arrow {
@@ -866,14 +868,15 @@ a {
 .product-carousel__viewport {
   flex: 1;
   min-width: 0;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .product-scroller {
-  overflow-x: auto;
-  overflow-y: hidden;
+  width: max-content;
   scroll-behavior: smooth;
   padding-bottom: 8px;
-  scrollbar-width: thin;
 }
 
 .product-scroller__track {
