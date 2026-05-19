@@ -8,21 +8,24 @@ function ensureAdmin() {
     return false;
   }
 
-  document.getElementById("welcomeText").innerText = `Welcome, ${username}`;
+  const welcome = document.getElementById("welcomeText");
+  if (welcome) welcome.innerText = `Welcome, ${username}`;
   return true;
 }
 
 async function loadAdminData() {
   const token = localStorage.getItem("token");
+  const resultEl = document.getElementById("apiResult");
+
+  resultEl.style.display = "block";
+  resultEl.innerText = "Pinging API…";
 
   const response = await fetch("/admin/home", {
-    headers: {
-      "Authorization": "Bearer " + token
-    }
+    headers: { "Authorization": "Bearer " + token }
   });
 
   const text = await response.text();
-  document.getElementById("apiResult").innerText = text;
+  resultEl.innerText = text;
 }
 
 function logout() {
