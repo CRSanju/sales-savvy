@@ -45,7 +45,7 @@
   <main class="app-main bg-grid">
     <div class="page-hero">
       <h1>Best sellers</h1>
-      <p>Swipe the row or use arrows — add to bag with one tap.</p>
+      <p>Browse our catalog and add items to your bag.</p>
     </div>
 
     <div class="toolbar">
@@ -54,17 +54,7 @@
     </div>
 
     <section id="shoppingSection" class="section" style="padding: 0;">
-      <div class="product-carousel">
-        <button type="button" class="carousel-arrow carousel-arrow--prev" onclick="scrollProducts(-1)" aria-label="Scroll products left">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 6l-6 6 6 6"/></svg>
-        </button>
-        <div class="product-carousel__viewport">
-          <div id="productList"></div>
-        </div>
-        <button type="button" class="carousel-arrow carousel-arrow--next" onclick="scrollProducts(1)" aria-label="Scroll products right">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-      </div>
+      <div id="productList"></div>
     </section>
   </main>
 
