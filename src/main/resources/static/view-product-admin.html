@@ -2,15 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>View Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Details — Sales Savvy Admin</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body>
-  <div class="container">
-    <h2>Product Details</h2>
-    <div id="productDetails"></div>
-    <a href="/all-products-admin.html">Back to Product List</a>
-  </div>
+<body class="page-bg-grid">
+
+  <header class="site-nav site-nav--admin">
+    <a class="site-nav__brand" href="/admin-home.html">
+      <span class="site-nav__mark" aria-hidden="true"></span>
+      Sales Savvy <span class="admin-badge">Admin</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="/all-products-admin.html">All Products</a></li>
+        <li><a href="/add-product.html">Add Product</a></li>
+      </ul>
+    </nav>
+    <div class="site-nav__actions">
+      <button type="button" class="btn btn--ghost btn--small" onclick="window.location.href='/all-products-admin.html'">← Back</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="page-hero">
+      <h1>Product Details</h1>
+      <p>Full details for this catalog item.</p>
+    </div>
+
+    <div class="admin-form-card" id="productDetails"></div>
+  </main>
+
+  <footer class="site-footer">
+    <span>© Sales Savvy Admin</span>
+    <a href="/admin-home.html">Dashboard</a>
+  </footer>
 
   <script src="/js/admin-products.js"></script>
 </body>
