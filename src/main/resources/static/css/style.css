@@ -796,7 +796,7 @@ a {
   }
 }
 
-/* ——— App shell + carousel ——— */
+/* ——— App shell + product grid ——— */
 .app-main {
   max-width: 1180px;
   margin: 0 auto;
@@ -829,64 +829,15 @@ a {
   margin: 20px 0 24px;
 }
 
-.product-carousel {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.carousel-arrow {
-  flex: 0 0 44px;
-  width: 44px;
-  align-self: center;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: var(--ink);
-  color: var(--white);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s, opacity 0.15s;
-}
-
-.carousel-arrow:hover {
-  transform: scale(1.05);
-}
-
-.carousel-arrow:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.product-carousel__viewport {
-  flex: 1;
-  min-width: 0;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.product-scroller {
-  width: max-content;
-  scroll-behavior: smooth;
-  padding-bottom: 8px;
-}
-
-.product-scroller__track {
-  display: flex;
+/* Responsive product grid — replaces the horizontal carousel */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
-  padding: 8px 4px;
+  padding: 8px 0;
 }
 
 .product-card {
-  flex: 0 0 min(260px, 75vw);
   background: #ebebeb;
   border-radius: 14px;
   overflow: hidden;
@@ -913,10 +864,6 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.product-card__quick {
-  display: none;
 }
 
 .product-card__body {
@@ -954,9 +901,10 @@ a {
   border-radius: 10px;
 }
 
-@media (max-width: 640px) {
-  .carousel-arrow {
-    display: none;
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
   }
 }
 
