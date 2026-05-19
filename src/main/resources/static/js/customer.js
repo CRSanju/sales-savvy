@@ -32,11 +32,6 @@ function goBackToShopping() {
   window.location.href = "/customer-home.html";
 }
 
-function scrollProducts(direction) {
-  const scroller = document.querySelector("#productList .product-scroller");
-  if (!scroller) return;
-  scroller.scrollBy({ left: direction * 300, behavior: "smooth" });
-}
 
 const PLACEHOLDER_IMAGE = "/images/placeholder-product.svg";
 
@@ -70,7 +65,7 @@ async function loadProducts() {
     return;
   }
 
-  let html = `<div class="product-scroller"><div class="product-scroller__track">`;
+  let html = `<div class="product-grid">`;
 
   products.forEach(product => {
     const img = product.imageUrl && String(product.imageUrl).trim()
@@ -80,7 +75,6 @@ async function loadProducts() {
       <article class="product-card">
         <div class="product-card__media">
           <img src="${img}" alt="${product.name}" class="product-card__img" loading="lazy" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'" />
-          <div class="product-card__quick">Tap to add</div>
         </div>
         <div class="product-card__body">
           <h3 class="product-card__title">${product.name}</h3>
@@ -92,7 +86,7 @@ async function loadProducts() {
     `;
   });
 
-  html += `</div></div>`;
+  html += `</div>`;
   productList.innerHTML = html;
 }
 
