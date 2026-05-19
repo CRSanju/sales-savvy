@@ -870,6 +870,7 @@ a {
 
 .product-scroller {
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
   padding-bottom: 8px;
   scrollbar-width: thin;
