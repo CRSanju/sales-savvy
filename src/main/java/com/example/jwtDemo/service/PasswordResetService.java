@@ -4,14 +4,16 @@ import com.example.jwtDemo.entity.PasswordResetToken;
 import com.example.jwtDemo.entity.User;
 import com.example.jwtDemo.repository.PasswordResetTokenRepository;
 import com.example.jwtDemo.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -19,64 +21,81 @@ public class PasswordResetService {
 
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository tokenRepository;
-    private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
+
+    private final WebClient webClient;
 
     @Value("${app.base-url}")
     private String baseUrl;
 
-    @Value("${spring.mail.username}")
-    private String fromEmail;
+    @Value("${brevo.api.key}")
+    private String brevoApiKey;
 
     public PasswordResetService(UserRepository userRepository,
                                 PasswordResetTokenRepository tokenRepository,
-                                JavaMailSender mailSender,
                                 PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
-        this.mailSender = mailSender;
         this.passwordEncoder = passwordEncoder;
+
+        this.webClient = WebClient.builder()
+                .baseUrl("https://api.brevo.com/v3/smtp/email")
+                .build();
     }
 
     @Transactional
     public void sendResetLink(String email) {
+
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("No account found with that email"));
 
-        // Delete any existing tokens for this user before creating a new one
         tokenRepository.deleteAllByUserId(user.getId());
 
-        // Generate a secure random token
         String token = UUID.randomUUID().toString();
 
-        // Save token with 15-minute expiry
         PasswordResetToken resetToken = new PasswordResetToken(
                 token,
                 user,
                 LocalDateTime.now().plusMinutes(15)
         );
+
         tokenRepository.save(resetToken);
 
-        // Build and send the email
         String resetLink = baseUrl + "/reset-password.html?token=" + token;
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("Password Reset Request");
-        message.setText(
-            "Hi " + user.getName() + ",\n\n" +
-            "You requested to reset your password. Click the link below:\n\n" +
-            resetLink + "\n\n" +
-            "This link expires in 15 minutes.\n\n" +
-            "If you didn't request this, you can safely ignore this email.\n\n" +
-            "Regards,\nJWT Shop Team"
+        String emailContent =
+                "Hi " + user.getName() + ",<br><br>" +
+                "You requested to reset your password.<br><br>" +
+                "<a href=\"" + resetLink + "\">Reset Password</a><br><br>" +
+                "This link expires in 15 minutes.<br><br>" +
+                "If you didn't request this, you can ignore this email.<br><br>" +
+                "Regards,<br>Sales Savvy Team";
+
+        Map<String, Object> body = Map.of(
+                "sender", Map.of(
+                        "name", "Sales Savvy",
+                        "email", "rsanju.3312@gmail.com"
+                ),
+                "to", new Object[]{
+                        Map.of("email", email)
+                },
+                "subject", "Password Reset Request",
+                "htmlContent", emailContent
         );
-        mailSender.send(message);
+
+        webClient.post()
+                .header("api-key", brevoApiKey)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
     @Transactional
     public void resetPassword(String token, String newPassword) {
+
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
 
@@ -89,11 +108,13 @@ public class PasswordResetService {
         }
 
         User user = resetToken.getUser();
+
         user.setPassword(passwordEncoder.encode(newPassword));
+
         userRepository.save(user);
 
-        // Mark token as used so it cannot be reused
         resetToken.setUsed(true);
+
         tokenRepository.save(resetToken);
     }
 }
