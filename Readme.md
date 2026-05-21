@@ -58,23 +58,6 @@ cd sales-savvy
 mvn spring-boot:run
 ```
 
----
-
-## Environment Variables
-
-```properties
-DATABASE_URL=
-DATABASE_USERNAME=
-DATABASE_PASSWORD=
-
-BREVO_API_KEY=
-
-APP_BASE_URL=
-
-PORT=
-```
-
----
 
 ## Author
 
