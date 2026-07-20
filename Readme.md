@@ -1,70 +1,69 @@
-# Sales Savvy
+# 🛒 Sales Savvy
 
-Full-stack ecommerce web application built using Spring Boot, JWT Authentication, PostgreSQL, and responsive frontend technologies.
+A full-stack e-commerce application built with **Spring Boot**, **Spring Security**, **JWT Authentication**, and **PostgreSQL**. The application is containerized using **Docker** and deployed on **AWS EC2** with **Docker Compose** and **Nginx**.
 
-## Live Demo
+## 🚀 Tech Stack
 
-https://sales-savvy-bfxb.onrender.com
-
----
-
-## Features
-
-- JWT Authentication
-- Role-Based Access
-- Product Management
-- Shopping Cart
-- Password Reset via Email
-- Brevo Email API Integration
-- Responsive UI
-- REST APIs
-- Cloud Deployment
-
----
-
-## Tech Stack
-
-### Backend
-- Java
+- Java 17
 - Spring Boot
 - Spring Security
-- Hibernate / JPA
-- JWT
-
-### Frontend
-- HTML
-- CSS
-- JavaScript
-
-### Database
-- PostgreSQL
-
-### Cloud & Deployment
-- Render
-- Neon PostgreSQL
+- JWT Authentication
+- PostgreSQL (Neon)
 - Docker
+- Docker Compose
+- AWS EC2
+- Nginx
+- Maven
 
-### External Services
-- Brevo Email API
-- Razorpay
+## ✨ Features
 
----
+- JWT Authentication & Authorization
+- Product CRUD APIs
+- Role-Based Access Control
+- RESTful APIs
+- PostgreSQL Integration
+- Dockerized Deployment
+- AWS EC2 Deployment
+- Environment-based Configuration
 
-## Run Locally
+## 🏗️ Architecture
+
+```
+Internet
+    │
+    ▼
+AWS EC2
+    │
+    ▼
+Nginx
+    │
+    ▼
+Docker Compose
+    │
+    ▼
+Spring Boot
+    │
+    ▼
+PostgreSQL (Neon)
+```
+
+## ▶️ Run Locally
 
 ```bash
 git clone https://github.com/CRSanju/sales-savvy.git
 cd sales-savvy
-mvn spring-boot:run
+docker compose up -d --build
 ```
 
+## 📌 Deployment
 
-## Author
+- Docker
+- Docker Compose
+- AWS EC2 (Ubuntu)
+- Nginx Reverse Proxy
 
-### Sanju R
+## 👨‍💻 Author
 
-GitHub:  
-https://github.com/CRSanju
+**Sanju R**
 
-LinkedIn:  
-https://www.linkedin.com/in/crsanju
+GitHub: https://github.com/CRSanju
